@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chrome 小恐龍跑酷</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <div class="hud">
+        <div class="stat">
+          <span class="label">分數</span>
+          <span id="score">0</span>
+        </div>
+        <div class="stat">
+          <span class="label">最高</span>
+          <span id="best">0</span>
+        </div>
+      </div>
+
+      <canvas id="gameCanvas" width="960" height="300" aria-label="Chrome 小恐龍跑酷遊戲"></canvas>
+
+      <div class="controls">
+        <span>空白鍵 / ↑ / 點擊畫面：跳躍，↓：下蹲，按住可低身體</span>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
