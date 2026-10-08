@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>No.146 火焰鸟 - 宝可梦 - 宝可梦图鉴 - 精灵宝可梦剑·盾</title>
+    <meta charset="utf-8">
+    <meta name="description" content="No.146 火焰鸟/Moltres/ファイヤー -  / ">
+    <meta name="keywords" content="口袋大学城,口袋妖怪,神奇宝贝,精灵宝可梦,宠物小精灵,pokemon,图鉴,资料库,剑盾,Sword,Shield">
+    <base href="https://www.pokedex.app/zh/">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../resource/stylesheet.css?3.5">
+    <link rel="stylesheet" type="text/css" href="../resource/library/chosen-js/chosen.css">
+    <link rel="stylesheet" type="text/css" href="../resource/font-awesome.min.css">
+    <link rel="alternate" href="https://www.pokedex.app/zh" hreflang="x-default">
+    <link rel="alternate" href="https://www.pokedex.app/en" hreflang="en">
+    <script src="../resource/library/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="../resource/library/angular.min.js" type="text/javascript"></script>
+    <script src="../resource/library/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="../resource/library/angular-chosen.min.js" type="text/javascript"></script>
+    <script src="../resource/library/angular-inview.js" type="text/javascript"></script>
+    <script src="../resource/library/javascript.js?3.5" type="text/javascript"></script>
+    <script src="../resource/library/chosen-js/chosen.jquery.js" type="text/javascript"></script>
+    <script src="../resource/library/pinyin.js" type="text/javascript"></script>
+    <script src="../resource/library/names.js?3.5" type="text/javascript"></script>
+    <script src="../resource/constants.js?3.5" type="text/javascript"></script>
+    <!--<script src="https://kit.fontawesome.com/f73184b8a7.js" type="text/javascript"></script>-->
+</head>
+<body ng-app="pokedex" ng-controller="main">
+    <header>
+        <img class="logo" src="../image/logo.png">
+        <ul class="nav">
+            <li><a href="home" ng-bind="_LANG.page_name.home"></a></li>
+            <li><a href="pokemon" ng-bind="_LANG.page_name.pokemon"></a></li>
+            <li><a href="move" ng-bind="_LANG.page_name.move"></a></li>
+            <li><a href="ability" ng-bind="_LANG.page_name.ability"></a></li>
+            <li><a href="item" ng-bind="_LANG.page_name.item"></a></li>
+            <li><a href="trainer" ng-bind="_LANG.page_name.trainer"></a></li>
+            <li><a href="tool" ng-bind="_LANG.page_name.tool"></a></li>
+            <li><a href="search" ng-bind="_LANG.page_name.search"></a></li>
+            <li><a href="http://www.pokeuniv.com/bbs/thread-53808-1-1.html" target="_blank" ng-bind="_LANG.page_name.data"></a></li>
+            <li><a href="http://www.pokeuniv.com/bbs/thread-7329-1-1.html" target="_blank" ng-bind="_LANG.page_name.forum"></a></li>
+            <li class="float-right" ng-bind="_LANG.current_version + '3.5'"></li>
+        </ul>
+    </header>
+    <main>
+        
+    <link rel="stylesheet" href="../resource/library/svgtree/svgtree.css">
+    <script src="../resource/library/svgtree/svgtree.js" type="text/javascript"></script>
+
+    <article ng-show>
+        Loading...
+    </article>
+    <article ng-controller="pokemon" ng-cloak>
+
+        <!-- Quick index -->
+        <div>
+            <span class="float-left">
+                <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{p.neighbours.prev.id}}.png">
+                <a href="pokemon-{{p.neighbours.prev.id}}" pokemon ng-bind="'No.' + p.neighbours.prev.id + ' ' + p.neighbours.prev.name"></a>
+            </span>
+            <span class="float-right">
+                <a href="pokemon-{{p.neighbours.next.id}}" pokemon ng-bind="'No.' + p.neighbours.next.id + ' ' + p.neighbours.next.name"></a>
+                <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{p.neighbours.next.id}}.png">
+            </span>
+        </div>
+        <br clear="both"><br>
+
+        <!-- Basic info - Side -->
+        <section class="pokemon-info box float-left">
+            <img ng-src="{{IMAGE_BASE}}/pokemon/pgl/{{p.img_id || p.nat_id}}.png" class="pokemon-art">
+            <table>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.type"></td>
+                    <td>
+                        <span class="typei-{{p.type}}"></span>
+                        <span ng-if="p.type_b" class="typei-{{p.type_b}}"></span>
+                    </td>
+                </tr>
+                <tr><td ng-bind="::_LANG.pokemon.category"></td><td ng-bind="p.category + _LANG.pokemon.name">火焰宝可梦</td></tr>
+                <tr>
+                    <td ng-bind="::_LANG['armor_id']"></td>
+                    <td ng-bind="p['armor_id'] || '-'"></td>
+                </tr>
+                <tr>
+                    <td ng-bind="::_LANG['galar_id']"></td>
+                    <td ng-bind="p['galar_id'] || '-'"></td>
+                </tr>
+                <tr ng-repeat="r in ['alola', 'melemele', 'akala', 'ulaula', 'poni']">
+                    <td ng-bind="::_LANG[r + '_id']"></td>
+                    <td>
+                        <span ng-bind="p[r + '_id'] || '-'"></span><sup>USUM</sup> /
+                        <span ng-bind="p[r + '_id_sm'] || '-'"></span><sup>SM</sup>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.ability"></td>
+                    <td>
+                        <a tooltip="{{p.abilitya.brief_description}}" ng-bind="p.abilitya.name" href="ability-{{normalize(p.abilitya.name_en)}}" target="_blank">压迫感</a>
+                        <a ng-if="p.ability_b"> / <a tooltip="{{p.abilityb.brief_description}}" ng-bind="p.abilityb.name" href="ability-{{normalize(p.abilityb.name_en)}}" target="_blank"></a></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.ability_hidden"></td>
+                    <td ng-if="!p.ability_hidden">-</td>
+                    <td ng-if="p.ability_hidden"><a tooltip="{{p.abilityc.brief_description}}" ng-bind="p.abilityc.name" href="ability-{{normalize(p.abilityc.name_en)}}" target="_blank">火焰之躯</a></td>
+                </tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.cry"></td>
+                    <td>
+                        <span ng-class="{'sound-play': !is_playing, 'sound-stop': is_playing}" ng-click="playPokemonCry()"></span>
+                        <audio id="pokemon-cry" ng-src="{{Math.floor(p.nat_id) | renderCrySource : 'ogg'}}" preload="none"></audio>
+                    </td>
+                </tr>
+                <tr><td ng-bind="::_LANG.pokemon.height"></td><td ng-bind="p.height + 'm'">2m</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.weight"></td><td ng-bind="p.weight + 'kg'">60kg</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.max_exp"></td><td ng-bind="p.max_exp"></td></tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.gender_ratio"></td>
+                    <td ng-if="p.gender_ratio.length">
+                        <span class="gender-male"></span><span ng-bind="p.gender_ratio[0] + '%'">%</span>
+                        <span class="gender-female"></span><span ng-bind="p.gender_ratio[1] + '%'">%</span>
+                    </td>
+                    <td ng-if="!p.gender_ratio.length">-</td>
+                </tr>
+                <tr><td ng-bind="::_LANG.pokemon.capture_rate"></td><td ng-bind="p.capture_rate"></td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.base_exp"></td><td ng-bind="p.base_exp"></td></tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.egg_group"></td>
+                    <td>
+                        <a ng-bind="_LANG.pokemon.data_egg_group[p.egg_group]" ng-href="pokemon-national#eg={{p.egg_group}}" target="_blank" tooltip></a>
+                        <span ng-if="p.egg_group_b"> / </span>
+                        <a ng-if="p.egg_group_b" ng-bind="_LANG.pokemon.data_egg_group[p.egg_group_b]" ng-href="pokemon-national#eg={{p.egg_group_b}}" target="_blank" tooltip></a>
+                    </td>
+                </tr>
+                <tr><td ng-bind="::_LANG.pokemon.hatch_step"></td><td><span tooltip="{{::_LANG.gen4}}: {{p.egg_cycle * 255}}{{::_LANG.unit.step}}<br>{{::_LANG.gen3_or_less}}: {{p.egg_cycle * 256}}{{::_LANG.unit.step}}<br>{{p.egg_cycle}}{{::_LANG.unit.a}}{{::_LANG.pokemon.egg_cycle}}" ng-bind="p.egg_cycle * 257 + _LANG.unit.step"></span></td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.init_hpns"></td><td ng-bind="p.happiness_initial"></td></tr>
+                <tr>
+                    <td ng-bind="::_LANG.pokemon.hold_items"></td>
+                    <td>
+                        <a ng-if="p.hold_item_common" href="item-{{p.hold_item_common.link_id}}" target="_blank">
+                            <img ng-src="{{IMAGE_BASE}}/item/{{p.hold_item_common.item_id}}.png"> <span tooltip="{{p.hold_item_common.description}}" ng-bind="p.hold_item_common.name_zh"></span> - 50%<br>
+                        </a>
+                        <a ng-if="p.hold_item_rare" href="item-{{p.hold_item_rare.link_id}}" target="_blank">
+                            <img ng-src="{{IMAGE_BASE}}/item/{{p.hold_item_rare.item_id}}.png"> <span tooltip="{{p.hold_item_rare.description}}" ng-bind="p.hold_item_rare.name_zh"></span> - 5%<br>
+                        </a>
+                        <span ng-if="!p.hold_item_common && !p.hold_item_rare">-</span>
+                    </td>
+                </tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.zh"></td><td ng-bind="p.name">火焰鸟</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.jp"></td><td ng-bind="p.name_jp">ファイヤー</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.en"></td><td ng-bind="p.name_en">Moltres</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.de"></td><td ng-bind="p.name_de">Lavados</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.it"></td><td ng-bind="p.name_it">Moltres</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.es"></td><td ng-bind="p.name_es">Moltres</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.fr"></td><td ng-bind="p.name_fr">Sulfura</td></tr>
+                <tr><td ng-bind="::_LANG.pokemon.name_trans.kr"></td><td ng-bind="p.name_kr">파이어</td></tr>
+            </table>
+        </section>
+
+        <!-- Pseudo title -->
+        <div class="page-title pokemon-title border-bottom float-right">
+            <span ng-bind="'No.' + p.nat_id + ' ' + p.name_zh">No.146 火焰鸟</span>
+            <span class="title-small" ng-bind="p.name_jp + ' ' + p.name_en">ファイヤー Moltres</span>
+            <span class="float-right" ng-if="p.alola_id_sm && !({ 203: 1, 204: 1, 205: 1 }[p.alola_id_sm] || p.alola_id_sm > 284)">
+                <a href="{{IMAGE_BASE}}/pokemon/smqr/{{p.alola_id_sm}}.png" target="_blank">
+                    QR:
+                    <img ng-src="{{IMAGE_BASE}}/pokemon/smqr/{{p.alola_id_sm}}.png" class="qr">
+                </a>
+            </span>
+        </div>
+
+        <!-- Stats -->
+        <br clear="right" ng-bind="t = _LANG.click_to_enter + _LANG.damage_calculator + '/' + _LANG.iv_ev_calculator + '/' + _LANG.speed_line">
+        <div class="page-title">
+            <span ng-bind="::_LANG.pokemon.stat.text"></span>
+            <span class="title-small">&nbsp;&nbsp;
+                <a href="tool" target="_blank" tooltip="{{t}}" ng-bind="'(' + t + ')'"></a>
+            </span>
+        </div>
+        <section class="pokemon-stat float-right box">
+            <table ng-init="keys = ['hp','atk','def','spatk','spdef','spd']; level_limit = [1, 100]; iv_limit = [0, 31]; ev_limit = [0, 252]; level = 50;">
+                <tr>
+                    <th class="border-right border-bottom"></th>
+                    <th class="border-bottom" ng-bind="::_LANG.pokemon.base_stat"></th>
+                    <th class="border-bottom"></th>
+                    <th class="border-bottom"><span tooltip="{{::_LANG.hint.battle_effort_value}}" ng-bind="::_LANG.pokemon.effort_value_raw"></span></th>
+                    <th class="border-bottom" ng-bind="::_LANG.pokemon.idv_value"></th>
+                    <th class="border-bottom" ng-bind="_LANG.pokemon.effort_value + ' (' + (510 - eft_value_config.sum()) + ')'"></th>
+                    <th class="border-bottom" ng-bind="::_LANG.pokemon.stat.text"></th>
+                </tr>
+                <tr ng-repeat="(k, base_stat) in p.base_stat track by $index">
+                    <th class="border-right" ng-bind="::_LANG.pokemon.stat[keys[k]]"></th>
+                    <td ng-bind="base_stat"></td>
+                    <td><div class="base-stat-bar"><div class="fill" style="width: {{base_stat / 255 * 100}}%"> </div></div></td>
+                    <td ng-bind="p.effort_value[k]"></td>
+                    <td><input type="number" min="{{::iv_limit[0]}}" max="{{::iv_limit[1]}}" ng-model="idv_value_config[k]" value="31" size="2" ng-change="idv_value_config[k] = parseNumber(idv_value_config[k], iv_limit[0], iv_limit[1])"></td>
+                    <td><input type="number" min="{{::ev_limit[0]}}" max="{{::ev_limit[1]}}" ng-model="eft_value_config[k]" value="31" size="2" ng-change="eft_value_config[k] = parseNumber(eft_value_config[k], ev_limit[0], ev_limit[1])" step="4"></td>
+                    <td ng-bind="calculateStat(base_stat, level, k, nature, eft_value_config[k], idv_value_config[k])"></td>
+                </tr>
+                <tr>
+                    <th class="border-right border-top" ng-bind="_LANG.total"></th>
+                    <td class="border-top" ng-bind="arraySum(p.base_stat)"></td>
+                    <td class="border-top" ng-bind="_LANG.hidden_power_type + ' - ' + _LANG.pokemon.data_type[calculateHiddenPowerType(idv_value_config)]"></td>
+                    <td class="border-top" ng-bind="arraySum(p.effort)"></td>
+                    <td class="border-top">
+                        <span ng-bind="::_LANG.pokemon.level"></span>
+                        <input type="number" min="{{::level_limit[0]}}" max="{{::level_limit[1]}}" ng-model="level" value="100" size="2" ng-change="level = parseNumber(level, level_limit[0], level_limit[1])">
+                    </td>
+                    <td class="border-top" colspan="2">
+                        <select ng-model="nature"><option ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]" ng-bind="_LANG.pokemon.data_nature[n] + ' (' + natureModifier(n, true).join(' ') + ')'" value="{{n}}"></option></select>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Evolve chain -->
+        <br clear="right">
+        <div class="page-title" ng-bind="_LANG.pokemon.evolve_chain"></div>
+        <section class="pokemon-echain float-right box">
+            <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{p.devolution.nat_id}}.png">
+            <span class="info inline">
+                <a ng-if="p.nat_id != p.devolution.nat_id" href="pokemon-{{Math.floor(p.devolution.nat_id)}}" tooltip="No.{{p.devolution.nat_id}} {{p.devolution.name}}" pokemon ng-bind="'No.' + p.devolution.nat_id + ' ' + p.devolution.name"></a>
+                <a ng-if="p.nat_id == p.devolution.nat_id" ng-bind="'No.' + p.devolution.nat_id + ' ' + p.devolution.name"></a>
+            </span><br>
+            <span ng-repeat="e in p.evolve_chain">
+                <span class="level-1"></span>└──────
+                <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{e.approach[0]}}.png">
+                <span class="info-level-1 inline">
+                    <a ng-if="p.nat_id != e.approach[0]" href="pokemon-{{Math.floor(e.approach[0])}}" tooltip="No.{{e.approach[0]}} {{e.approach.name}}" pokemon ng-bind="'No.' + e.approach[0] + ' ' + e.approach.name"></a>
+                    <a ng-if="p.nat_id == e.approach[0]" ng-bind="'No.' + e.approach[0] + ' ' + e.approach.name"></a>
+                </span>
+                <span ng-bind="e.approach.text"></span><br>
+                <span ng-repeat="f in e.chain">
+                    <span class="level-2"></span>└──────
+                    <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{f.approach[0]}}.png">
+                    <span class="info-level-2 inline">
+                        <a ng-if="p.nat_id != f.approach[0]" href="pokemon-{{Math.floor(f.approach[0])}}" tooltip="No.{{f.approach[0]}} {{f.approach.name}}" pokemon ng-bind="'No.' + f.approach[0] + ' ' + f.approach.name"></a>
+                        <a ng-if="p.nat_id == f.approach[0]" ng-bind="'No.' + f.approach[0] + ' ' + f.approach.name"></a>
+                    </span>
+                    <span ng-bind="f.approach.text"></span><br>
+                </span>
+            </span>
+        </section>
+
+        <!-- Forme -->
+        <div ng-if="p.forme.length">
+            <br clear="right">
+            <div class="page-title" ng-bind="_LANG.pokemon.forme"></div>
+            <section class="pokemon-echain float-right box">
+                <div ng-if="!p.forme.length" ng-bind="::_LANG.no_forme"></div>
+                <div ng-if="p.forme.length">
+                    <label>
+                        <input name="forme" type="radio" ng-click="changeForme(false)" ng-checked="true">
+                        <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{primaryForm.nat_id}}.png">
+                        <span ng-bind="primaryForm.name_zh"></span>
+                    </label>
+                </div>
+                <div ng-repeat="f in p.forme">
+                    <label>
+                        <input name="forme" type="radio" ng-click="changeForme(f)">
+                        <img class="picon" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{f.nat_id}}.png">
+                        <span ng-bind="f.name_zh"></span>
+                    </label>
+                </div>
+            </section>
+        </div>
+
+        <!-- Description -->
+        <br clear="right">
+        <div class="page-title" ng-bind="_LANG.pokemon.description"></div>
+        <section class="float-right box pokemon-description">
+            <div ng-if="!p.description_sun && !p.description_us && !p.description_sword" ng-bind="::_LANG.no_pokedex_description" class="hint-noresult"></div>
+            <table width="100%" ng-if="p.description_sun || p.description_us || p.description_sword">
+                <tr ng-if="p.description_sun"><th ng-bind="::_LANG.versions[1]" width="15%"></th><td ng-bind="p.description_sun"></td></tr>
+                <tr ng-if="p.description_moon"><th ng-bind="::_LANG.versions[2]" width="15%"></th><td ng-bind="p.description_moon"></td></tr>
+                <tr ng-if="p.description_us"><th ng-bind="::_LANG.versions[3]" width="15%"></th><td ng-bind="p.description_us"></td></tr>
+                <tr ng-if="p.description_um"><th ng-bind="::_LANG.versions[4]" width="15%"></th><td ng-bind="p.description_um"></td></tr>
+                <tr ng-if="p.description_sword"><th ng-bind="::_LANG.versions[5]" width="15%"></th><td ng-bind="p.description_sword"></td></tr>
+                <tr ng-if="p.description_shield"><th ng-bind="::_LANG.versions[6]" width="15%"></th><td ng-bind="p.description_shield"></td></tr>
+            </table>
+        </section>
+
+        <!-- Type chart -->
+        <br clear="right">
+        <div class="page-title pokemon-typechart float-right" ng-init="ability_suffixes = ['', 'a', 'b', 'c']; type_ability = 0; sizes = [0, size(p.type_chart[1]), size(p.type_chart[2]), size(p.type_chart[3])]">
+            <span ng-bind="_LANG.pokemon.type_resist"></span>&nbsp;&nbsp;
+            <span class="title-small" ng-if="arraySum(sizes)">
+                <span ng-repeat="(k, chart) in p.type_chart" ng-if="size(chart)">
+                    <label for="with_ability{{k}}" ng-bind="k == 0 && _LANG.pokemon.ability_free || p['ability'+ability_suffixes[k]].name"></label>
+                    <input ng-if="k == 0" type="radio" id="with_ability{{k}}" name="type_ability" ng-model="$parent.$parent.$parent.$parent.type_ability" ng-value="k" checked>
+                    <input ng-if="k != 0" type="radio" id="with_ability{{k}}" name="type_ability" ng-model="$parent.$parent.$parent.$parent.type_ability" ng-value="k">
+                </span>
+            </span>
+        </div>
+        <section class="pokemon-typechart float-right box">
+            <table>
+                <tr><td ng-repeat="k in [1, 2, 3, 4, 5, 6, 7, 8, 9]"><span class="typei-{{k}}"></span></td></tr>
+                <tr><td ng-repeat="k in [1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-bind-html="p.type_chart[type_ability][k] != 1 && fractionize(p.type_chart[type_ability][k]) || '-'"></td></tr>
+                <tr><td ng-repeat="k in [10, 11, 12, 13, 14, 15, 16, 17, 18]"><span class="typei-{{k}}"></span></td></tr>
+                <tr><td ng-repeat="k in [10, 11, 12, 13, 14, 15, 16, 17, 18]" ng-bind-html="p.type_chart[type_ability][k] != 1 && fractionize(p.type_chart[type_ability][k]) || '-'"></td></tr>
+            </table>
+        </section>
+
+        <!-- Sprites -->
+        <br clear="right">
+        <div class="page-title pokemon-sprites float-right" ng-bind="_LANG.pokemon.game_sprites"></div>
+        <section class="float-right box pokemon-sprites">
+            <table width="100%">
+                <tr>
+                    <th width="25%" ng-bind="::_LANG.front"></th>
+                    <th width="25%" ng-bind="::_LANG.front_shiny"></th>
+                    <th width="25%" ng-bind="::_LANG.back"></th>
+                    <th width="25%" ng-bind="::_LANG.back_shiny"></th>
+                </tr>
+                <tr>
+                    <td ng-repeat="(k, i) in ['front', 'front-shiny', 'back', 'back-shiny']">
+                        <img ng-if="k < 2 && (p.nat_id >= 810 || p.galar_form)" pokemon-overflow style="width:120px" ng-src="//s.pokeuniv.com/pokemon/sprite/{{i}}/{{p.img_id || p.nat_id}}.png">
+                        <img ng-if="p.nat_id < 810 && !p.galar_form" pokemon-overflow ng-src="//s.pokeuniv.com/pokemon/sprite/{{i}}/{{p.img_id || p.nat_id}}.gif">
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <br clear="both"><br>
+        <!-- Encounter table -->
+        <div class="page-title" ng-bind="_LANG.pokemon.obtain_approach"></div>
+        <section class="box pokemon-encounter">
+            <table width="100%">
+                <tr ng-if="!p.encounter_table.length && !p.special_obtain_approach[7] && !p.special_obtain_approach[8] && !p.encounter_table_sw.length">
+                    <td ng-bind="::_LANG.cannot_obtain_directly" class="hint-noresult" colapsn="6"></td>
+                </tr>
+                <tr ng-if="p.encounter_table_sw.length || p.special_obtain_approach[8].length"><th ng-bind="_LANG.data_versions[8]" colspan="6"></th><tr>
+                <tr ng-repeat="a in p.special_obtain_approach[8]">
+                    <th ng-bind-html="_LANG.data_obtain_approach[a[0]]"></th>
+                    <td ng-bind="a[1][1] ? a[1].join('~') : a[1]"></td>
+                    <td colspan="2" ng-bind-html="a[3].split('、').join('<br>') + (a[0] == 7 && a[1] == 65 ? _LANG.hint_postgame : '')" style="text-align:left"></td>
+                    <td>
+                        <div ng-if="!a[4]">-</div>
+                        <div ng-repeat="c in a[4]" ng-bind="c.rank + '*: ' + parseInt(c.chance) + '%'"></div>
+                    </td>
+                    <td ng-bind="_LANG.versions[a[2]]"></td>
+                </tr>
+                <tbody ng-repeat="(is_overworld, o) in p.encounter_table_sw">
+                    <tr ng-if="o.length"><th ng-bind="is_overworld ? _LANG.overworld : _LANG.non_overworld" colspan="6"></th><tr>
+                    <tr ng-repeat="e in o">
+                        <td ng-bind="e.min_level == e.max_level ? e.min_level : e.min_level + '~' + e.max_level"></td>
+                        <td ng-bind="e.map_name + (e.note ? ' (' + e.note + ')' : '')"></td>
+                        <td colspan="2">
+                            <span ng-repeat="w in e.appear_condition">
+                                {{_LANG.sw_appear_conditions[w]}}
+                            </span>
+                        </td>
+                        <td ng-bind="_LANG.versions[e.version[0] + 4] + (e.version[1] ? ' ' + _LANG.versions[e.version[1] + 4] : '')"></td>
+                        <td ng-bind="e.chance + '%'"></td>
+                        <!--<td ng-bind="_LANG.sw_appear_conditions" colspan="4"></td>-->
+                    </tr>
+                </tbody>
+                <tbody ng-if="p.encounter_table.length || p.special_obtain_approach[7]">
+                    <tr><th ng-bind="_LANG.data_versions[7]" colspan="6"></th><tr>
+                    <tr ng-repeat="a in p.special_obtain_approach[7]">
+                        <th width="15%" ng-bind="_LANG.data_obtain_approach[a[0]]"></th>
+                        <td ng-bind="a[1]"></td>
+                        <td colspan="5" ng-bind="(a[2] ? _LANG.versions[a[2]] + ' - ' : '') + a[3]"></td>
+                    </tr>
+                    <tr ng-repeat="e in p.encounter_table" ng-if="![767, 774, 775].has(p.nat_id) || [767, 774, 775].has(p.nat_id) && !e.is_sos">
+                        <th width="15%">
+                            <div ng-bind="_LANG.time_period[e.time_period]"></div>
+                            <div ng-if="e.is_sos == 1" tooltip="{{_LANG.sos_hint}}"> (SOS)</div>
+                            <div ng-if="e.is_sos == 2" tooltip="{{_LANG.weather_sos_hint + '<br>' + _LANG.sos_hint}}" ng-bind=" '(' + _LANG.weather_sos + ')'"></div>
+                        </th>
+                        <td ng-bind="e.min_level == e.max_level ? e.min_level : e.min_level + '~' + e.max_level"></td>
+                        <td ng-bind-html="(e.name_zh || '') + (e.sub_region ? '-' + _LANG.data_specific_regions[e.map_id][e.sub_region] : '') + (e.version ? ' (' + _LANG.versions[e.version] + ')' : '') + (e.summoned_by ? '<br>' + lang(_LANG.summoned_by, e.summoned_by) : '')" width="35%"></td>
+                        <td ng-bind="(e.is_sos == 1 ? Math.floor((1/7) * e.repeated_times * 1000) / 10 : (e.is_sos == 2 ? 6.25 : e.chance)) + '%'"></td>
+                        <td ng-bind="_LANG.data_encounter_type[e.encounter_type]"></td>
+                        <td ng-if="e.coordinates"><a href="javascript:void(0)" ng-click="mapView(e.world_id, e.coordinates)" ng-bind="_LANG.click_to_view_location"></a></td>
+                        <td ng-if="!e.coordinates" ng-bind="_LANG.no_available_views"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <br>
+
+        <!-- Move list -->
+        <h5 class="page-title">
+            <span ng-bind="::_LANG.move.mode"></span>
+            <span ng-repeat="i in [1, 1.1, 6, 7, 7.1, 8]" ng-if="size(p.moves[i]) > 0">
+                <label><span ng-bind="_LANG.data_versions[i]"></span> <input type="radio" name="gen" ng-model="$root.lsmode" ng-value="i" value="{{i}}"></label>
+            </span>
+        </h5>
+        <div ng-repeat="(k, move) in p.moves[lsmode]">
+            <div class="page-title">
+                <span ng-bind="_LANG.move.title[k]"></span>
+                <span class="title-small" ng-bind="_LANG.hint_hover_move"></span>
+            </div>
+            <section class="pokemon-move box">
+                <table ng-if="size(move)">
+                    <tr>
+                        <th ng-if="k == 1" ng-bind="::_LANG.move.level"></th>
+                        <th ng-if="k == 2" ng-bind="::_LANG.pokemon.id"></th>
+                        <th ng-bind="::_LANG.move.name"></th>
+                        <th ng-bind="::_LANG.move.type"></th>
+                        <th ng-bind="::_LANG.move.class.text"></th>
+                        <th ng-bind="::_LANG.move.power"></th>
+                        <th ng-bind="::_LANG.move.gigamax_power"></th>
+                        <th ng-bind="::_LANG.move.accuracy"></th>
+                        <th ng-bind="::_LANG.move.pp"></th>
+                        <th ng-if="k == 4" ng-bind="::_LANG.move.inherit_from"></th>
+                        <th ng-if="lsmode == 8 && k == 4" ng-bind="::_LANG.details"></th>
+                    </tr>
+                    <tbody ng-repeat="m in move">
+                        <tr tooltip="{{m.description}}" ng-click="open('move-' + m.move_id)">
+                            <td ng-if="k == 1" ng-bind="!m.learn_level && _LANG.evolve || m.learn_level == 1 && _LANG.initial || m.learn_level"></td>
+                            <td ng-if="k == 2" ng-bind="m.tm_id"></td>
+                            <td>
+                                <a href="move-{{m.move_id}}" target="_blank" ng-bind="m.name"></a>
+                            </td>
+                            <td ng-bind="_LANG.pokemon.data_type[m.type]" class="type-{{m.type}}"></td>
+                            <td ng-bind="_LANG.move.class[m.class]" class="class-{{m.class}}"></td>
+                            <td ng-bind="m.power === 1 && _LANG.move.varies || !m.power && '-' || m.power"></td>
+                            <td ng-bind="!m.gigamax_power && '-' || m.gigamax_power"></td>
+                            <td ng-bind="m.accuracy === 101 && m.power && _LANG.move.always_hit || (!m.accuracy || m.accuracy === 101 && !m.class) && '-' || m.accuracy"></td>
+                            <td ng-bind="m.pp"></td>
+                            <td ng-if="k == 4" width="50%">
+                                <div ng-if="!size(m.from)" ng-bind="_LANG.inherit_must_be_chained"></div>
+                                <a ng-repeat="(id, p) in m.from" ng-click="open('pokemon-' + Math.floor(id), $event)">
+                                    <img class="picon" ng-class="{ 'indirect-inherit': p[0] == 4 }" ng-src="{{IMAGE_BASE}}/pokemon/icon/{{id}}.png">
+                                </a>
+                            </td>
+                            <td ng-if="lsmode == 8 && k == 4"><a ng-bind="_LANG.egg_chain" ng-click="loadEggChain($event, p.nat_id, m.move_id)"></a></td>
+                        </tr>
+                        <tr ng-if="lsmode == 8 && k == 4 && current_viewing == m.move_id">
+                            <td colspan="9">
+                                <div ng-if="isUndefined(p.egg_chain)">Loading...</div>
+                                <div ng-if="!isUndefined(p.egg_chain)">
+                                    <div ng-if="!p.egg_chain[m.move_id]" ng-bind="_LANG.egg_chain_not_found"></div>
+                                    <div ng-if="p.egg_chain[m.move_id] && current_viewing == m.move_id" class="egg-chain svgtree-wrap {{'egg-chain-' + m.move_id}}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span ng-if="!size(move)">N/A</span>
+            </section>
+        </div>
+
+        <br clear="both">
+
+        <div id="pop-up" class="hidden" ng-class="{ hidden: !is_viewing }">
+            <span class="close" ng-click="is_viewing = false">×</span>
+            <div ng-bind-html="view_content"></div>
+            <div class="encounter-mark" ng-repeat="c in coords" style="left: {{c[0]}}px; top: {{c[1]}}px;"></div>
+        </div>
+        <div id="global-mask" class="hidden" ng-class="{ hidden: !is_viewing }" ng-click="is_viewing = false"></div>
+    </article>
+
+
+    <script>
+        app.factory('pokemon', function() { return {"nat_id":146,"name_zh":"火焰鸟","name_en":"Moltres","name_tc":"火焰鳥","name_zh_check":"火焰鸟","name_jp":"ファイヤー","name_it":"Moltres","name_es":"Moltres","name_fr":"Sulfura","name_de":"Lavados","name_kr":"파이어","type":1,"type_b":7,"ability":46,"ability_b":0,"ability_hidden":49,"capture_rate":3,"eft_value_defeated":"000300","base_stat":[90,100,90,125,85,90],"base_exp":261,"height":2,"weight":60,"egg_group":15,"egg_group_b":0,"egg_cycle":81,"gender_rate":255,"exp_type":5,"form":0,"happiness_initial":35,"has_female_sprite":0,"hold_item_common":null,"hold_item_rare":null,"internal_id":146,"description_sun":"","description_moon":"","description_us":"","description_um":"","category":"火焰","alola_id_sm":0,"melemele_id_sm":0,"akala_id_sm":0,"ulaula_id_sm":0,"poni_id_sm":0,"alola_id":0,"melemele_id":0,"akala_id":0,"ulaula_id":0,"poni_id":0,"initial_id":146,"ev_hp":0,"ev_atk":0,"ev_def":0,"ev_spatk":3,"ev_spdef":0,"ev_spd":0,"bs_hp":90,"bs_atk":100,"bs_def":90,"bs_spatk":125,"bs_spdef":85,"bs_spd":90,"color":3,"galar_id":0,"has_gigamax":0,"description_sword":"","description_shield":"","armor_id":0,"name":"火焰鸟","gender_ratio":[],"max_exp":"1,250,000","type_chart":[[0,0.5,2,0.25,2,1,0.5,1,0.25,1,4,0,0.5,1,1,1,1,1,0.5],[],[],[]],"abilitya":{"abi_id":46,"name":"压迫感","name_en":"Pressure","brief_description":"给予对手压迫感，大量减少其使用招式的ＰＰ。"},"abilityb":null,"abilityc":{"abi_id":49,"name":"火焰之躯","name_en":"Flame Body","brief_description":"有时会让接触到自己的对手变为灼伤状态。"},"devolution":{"nat_id":146,"name":"火焰鸟"},"evolve_chain":[],"effort_value":[0,0,0,3,0,0],"neighbours":{"prev":{"id":145,"name":"闪电鸟"},"next":{"id":147,"name":"迷你龙"}},"galar_form":0,"forme":[],"special_obtain_approach":{"7":""},"moves":{"1":{"1":[{"move_id":83,"learn_level":1,"name":"火焰旋涡","type":1,"class":2,"power":35,"accuracy":85,"pp":15,"gigamax_power":90,"description":"将对手困在激烈的火焰旋涡中，在４～５回合内进行攻击。","gen7_tm_id":"-1"},{"move_id":64,"learn_level":1,"name":"啄","type":7,"class":1,"power":35,"accuracy":100,"pp":35,"gigamax_power":90,"description":"用尖锐的喙或角刺向对手进行攻击。","gen7_tm_id":"-1"},{"move_id":43,"learn_level":51,"name":"瞪眼","type":5,"class":0,"power":0,"accuracy":100,"pp":30,"gigamax_power":0,"description":"用犀利的眼神使其害怕，从而降低对手的防御。","gen7_tm_id":"-1"},{"move_id":97,"learn_level":55,"name":"高速移动","type":14,"class":0,"power":0,"accuracy":101,"pp":30,"gigamax_power":0,"description":"让身体放松变得轻盈，以便高速移动。大幅提高自己的速度。","gen7_tm_id":"-1"},{"move_id":143,"learn_level":60,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1"}],"2":[{"move_id":13,"learn_level":0,"name":"旋风刀","type":5,"class":2,"power":80,"accuracy":100,"pp":10,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM002"},{"move_id":18,"learn_level":0,"name":"吹飞","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"吹飞对手，强制拉后备宝可梦上场。如果对手为野生宝可梦，战斗将直接结束。","gen7_tm_id":"-1","tm_id":"TM004"},{"move_id":92,"learn_level":0,"name":"剧毒","type":9,"class":0,"power":0,"accuracy":90,"pp":10,"gigamax_power":0,"description":"让对手陷入剧毒状态。随着回合的推进，中毒伤害会增加。","gen7_tm_id":6,"tm_id":"TM006"},{"move_id":36,"learn_level":0,"name":"猛撞","type":5,"class":1,"power":90,"accuracy":85,"pp":20,"gigamax_power":130,"description":"以惊人的气势撞向对手进行攻击。自己也会受到少许伤害。","gen7_tm_id":"-1","tm_id":"TM009"},{"move_id":38,"learn_level":0,"name":"舍身冲撞","type":5,"class":1,"power":120,"accuracy":100,"pp":15,"gigamax_power":140,"description":"拼命地猛撞向对手进行攻击。自己也会受到不小的伤害。","gen7_tm_id":"-1","tm_id":"TM010"},{"move_id":63,"learn_level":0,"name":"破坏光线","type":5,"class":2,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"向对手发射强烈的光线进行攻击。下一回合自己将无法动弹。","gen7_tm_id":15,"tm_id":"TM015"},{"move_id":99,"learn_level":0,"name":"愤怒","type":5,"class":1,"power":20,"accuracy":100,"pp":20,"gigamax_power":90,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM020"},{"move_id":102,"learn_level":0,"name":"模仿","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"可以将对手最后使用的招式，在战斗内变成自己的招式。","gen7_tm_id":"-1","tm_id":"TM031"},{"move_id":104,"learn_level":0,"name":"影子分身","type":5,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"通过快速移动来制造分身，扰乱对手，从而提高闪避率。","gen7_tm_id":32,"tm_id":"TM032"},{"move_id":115,"learn_level":0,"name":"反射壁","type":14,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"利用神奇的墙壁，在５回合内减弱从对手那里受到的物理攻击的伤害。","gen7_tm_id":33,"tm_id":"TM033"},{"move_id":117,"learn_level":0,"name":"忍耐","type":5,"class":1,"power":1,"accuracy":101,"pp":10,"gigamax_power":100,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM034"},{"move_id":126,"learn_level":0,"name":"大字爆炎","type":1,"class":2,"power":110,"accuracy":85,"pp":5,"gigamax_power":140,"description":"用大字形状的火焰烧尽对手。有时会让对手陷入灼伤状态。","gen7_tm_id":38,"tm_id":"TM038"},{"move_id":129,"learn_level":0,"name":"高速星星","type":5,"class":2,"power":60,"accuracy":101,"pp":20,"gigamax_power":110,"description":"发射星形的光攻击对手。攻击必定会命中。","gen7_tm_id":"-1","tm_id":"TM039"},{"move_id":143,"learn_level":0,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1","tm_id":"TM043"},{"move_id":156,"learn_level":0,"name":"睡觉","type":14,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"连续睡上２回合。回复自己的全部ＨＰ以及治愈所有异常状态。","gen7_tm_id":44,"tm_id":"TM044"},{"move_id":164,"learn_level":0,"name":"替身","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"削减少许自己的ＨＰ，制造分身。分身将成为自己的替身。","gen7_tm_id":90,"tm_id":"TM050"},{"move_id":19,"learn_level":0,"name":"飞翔","type":7,"class":1,"power":90,"accuracy":95,"pp":15,"gigamax_power":130,"description":"第１回合飞上天空，第２回合攻击对手。","gen7_tm_id":76,"tm_id":"HM001"}]},"1.1":{"1":[{"move_id":83,"learn_level":1,"name":"火焰旋涡","type":1,"class":2,"power":35,"accuracy":85,"pp":15,"gigamax_power":90,"description":"将对手困在激烈的火焰旋涡中，在４～５回合内进行攻击。","gen7_tm_id":"-1"},{"move_id":64,"learn_level":1,"name":"啄","type":7,"class":1,"power":35,"accuracy":100,"pp":35,"gigamax_power":90,"description":"用尖锐的喙或角刺向对手进行攻击。","gen7_tm_id":"-1"},{"move_id":43,"learn_level":51,"name":"瞪眼","type":5,"class":0,"power":0,"accuracy":100,"pp":30,"gigamax_power":0,"description":"用犀利的眼神使其害怕，从而降低对手的防御。","gen7_tm_id":"-1"},{"move_id":97,"learn_level":55,"name":"高速移动","type":14,"class":0,"power":0,"accuracy":101,"pp":30,"gigamax_power":0,"description":"让身体放松变得轻盈，以便高速移动。大幅提高自己的速度。","gen7_tm_id":"-1"},{"move_id":143,"learn_level":60,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1"}],"2":[{"move_id":13,"learn_level":0,"name":"旋风刀","type":5,"class":2,"power":80,"accuracy":100,"pp":10,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM002"},{"move_id":18,"learn_level":0,"name":"吹飞","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"吹飞对手，强制拉后备宝可梦上场。如果对手为野生宝可梦，战斗将直接结束。","gen7_tm_id":"-1","tm_id":"TM004"},{"move_id":92,"learn_level":0,"name":"剧毒","type":9,"class":0,"power":0,"accuracy":90,"pp":10,"gigamax_power":0,"description":"让对手陷入剧毒状态。随着回合的推进，中毒伤害会增加。","gen7_tm_id":6,"tm_id":"TM006"},{"move_id":36,"learn_level":0,"name":"猛撞","type":5,"class":1,"power":90,"accuracy":85,"pp":20,"gigamax_power":130,"description":"以惊人的气势撞向对手进行攻击。自己也会受到少许伤害。","gen7_tm_id":"-1","tm_id":"TM009"},{"move_id":38,"learn_level":0,"name":"舍身冲撞","type":5,"class":1,"power":120,"accuracy":100,"pp":15,"gigamax_power":140,"description":"拼命地猛撞向对手进行攻击。自己也会受到不小的伤害。","gen7_tm_id":"-1","tm_id":"TM010"},{"move_id":63,"learn_level":0,"name":"破坏光线","type":5,"class":2,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"向对手发射强烈的光线进行攻击。下一回合自己将无法动弹。","gen7_tm_id":15,"tm_id":"TM015"},{"move_id":99,"learn_level":0,"name":"愤怒","type":5,"class":1,"power":20,"accuracy":100,"pp":20,"gigamax_power":90,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM020"},{"move_id":102,"learn_level":0,"name":"模仿","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"可以将对手最后使用的招式，在战斗内变成自己的招式。","gen7_tm_id":"-1","tm_id":"TM031"},{"move_id":104,"learn_level":0,"name":"影子分身","type":5,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"通过快速移动来制造分身，扰乱对手，从而提高闪避率。","gen7_tm_id":32,"tm_id":"TM032"},{"move_id":115,"learn_level":0,"name":"反射壁","type":14,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"利用神奇的墙壁，在５回合内减弱从对手那里受到的物理攻击的伤害。","gen7_tm_id":33,"tm_id":"TM033"},{"move_id":117,"learn_level":0,"name":"忍耐","type":5,"class":1,"power":1,"accuracy":101,"pp":10,"gigamax_power":100,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":"-1","tm_id":"TM034"},{"move_id":126,"learn_level":0,"name":"大字爆炎","type":1,"class":2,"power":110,"accuracy":85,"pp":5,"gigamax_power":140,"description":"用大字形状的火焰烧尽对手。有时会让对手陷入灼伤状态。","gen7_tm_id":38,"tm_id":"TM038"},{"move_id":129,"learn_level":0,"name":"高速星星","type":5,"class":2,"power":60,"accuracy":101,"pp":20,"gigamax_power":110,"description":"发射星形的光攻击对手。攻击必定会命中。","gen7_tm_id":"-1","tm_id":"TM039"},{"move_id":143,"learn_level":0,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1","tm_id":"TM043"},{"move_id":156,"learn_level":0,"name":"睡觉","type":14,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"连续睡上２回合。回复自己的全部ＨＰ以及治愈所有异常状态。","gen7_tm_id":44,"tm_id":"TM044"},{"move_id":164,"learn_level":0,"name":"替身","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"削减少许自己的ＨＰ，制造分身。分身将成为自己的替身。","gen7_tm_id":90,"tm_id":"TM050"},{"move_id":19,"learn_level":0,"name":"飞翔","type":7,"class":1,"power":90,"accuracy":95,"pp":15,"gigamax_power":130,"description":"第１回合飞上天空，第２回合攻击对手。","gen7_tm_id":76,"tm_id":"HM001"}]},"7":{"1":[{"move_id":17,"learn_level":1,"name":"翅膀攻击","type":7,"class":1,"power":60,"accuracy":100,"pp":35,"gigamax_power":110,"description":"大大地展开美丽的翅膀，将其撞向对手进行攻击。","gen7_tm_id":"-1"},{"move_id":52,"learn_level":1,"name":"火花","type":1,"class":2,"power":40,"accuracy":100,"pp":25,"gigamax_power":90,"description":"向对手发射小型火焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":"-1"},{"move_id":83,"learn_level":8,"name":"火焰旋涡","type":1,"class":2,"power":35,"accuracy":85,"pp":15,"gigamax_power":90,"description":"将对手困在激烈的火焰旋涡中，在４～５回合内进行攻击。","gen7_tm_id":"-1"},{"move_id":97,"learn_level":15,"name":"高速移动","type":14,"class":0,"power":0,"accuracy":101,"pp":30,"gigamax_power":0,"description":"让身体放松变得轻盈，以便高速移动。大幅提高自己的速度。","gen7_tm_id":"-1"},{"move_id":203,"learn_level":22,"name":"挺住","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"即使受到攻击，也至少会留下１ＨＰ。连续使出则容易失败。","gen7_tm_id":"-1"},{"move_id":246,"learn_level":29,"name":"原始之力","type":10,"class":2,"power":60,"accuracy":100,"pp":5,"gigamax_power":110,"description":"用原始之力进行攻击。有时会提高自己所有的能力。","gen7_tm_id":"-1"},{"move_id":53,"learn_level":36,"name":"喷射火焰","type":1,"class":2,"power":90,"accuracy":100,"pp":15,"gigamax_power":130,"description":"向对手发射烈焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":35},{"move_id":219,"learn_level":43,"name":"神秘守护","type":5,"class":0,"power":0,"accuracy":101,"pp":25,"gigamax_power":0,"description":"在５回合内被神奇的力量守护，从而不会陷入异常状态。","gen7_tm_id":20},{"move_id":403,"learn_level":50,"name":"空气斩","type":7,"class":2,"power":75,"accuracy":95,"pp":15,"gigamax_power":130,"description":"用连天空也能劈开的空气之刃进行攻击。有时会使对手畏缩。","gen7_tm_id":"-1"},{"move_id":241,"learn_level":57,"name":"大晴天","type":1,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内让日照变得强烈，从而提高火属性的招式威力。水属性的招式威力则降低。","gen7_tm_id":11},{"move_id":257,"learn_level":64,"name":"热风","type":1,"class":2,"power":95,"accuracy":90,"pp":10,"gigamax_power":130,"description":"将炎热的气息吹向对手进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":"-1"},{"move_id":76,"learn_level":71,"name":"日光束","type":3,"class":2,"power":120,"accuracy":100,"pp":10,"gigamax_power":140,"description":"第１回合收集满满的日光，第２回合发射光束进行攻击。","gen7_tm_id":22},{"move_id":143,"learn_level":78,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1"},{"move_id":355,"learn_level":85,"name":"羽栖","type":7,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"降到地面，使身体休息。回复自己最大ＨＰ的一半。","gen7_tm_id":19},{"move_id":542,"learn_level":92,"name":"暴风","type":7,"class":2,"power":110,"accuracy":70,"pp":10,"gigamax_power":140,"description":"用强烈的风席卷对手进行攻击。有时会使对手混乱。","gen7_tm_id":"-1"},{"move_id":682,"learn_level":99,"name":"燃尽","type":1,"class":2,"power":130,"accuracy":100,"pp":5,"gigamax_power":140,"description":"将自己全身燃烧起火焰来，给予对手大大的伤害。自己的火属性将会消失。","gen7_tm_id":"-1"}],"2":[{"move_id":46,"learn_level":0,"name":"吼叫","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"放走对手，强制拉后备宝可梦上场。如果对手为野生宝可梦，战斗将直接结束。","gen7_tm_id":5,"tm_id":"TM005"},{"move_id":92,"learn_level":0,"name":"剧毒","type":9,"class":0,"power":0,"accuracy":90,"pp":10,"gigamax_power":0,"description":"让对手陷入剧毒状态。随着回合的推进，中毒伤害会增加。","gen7_tm_id":6,"tm_id":"TM006"},{"move_id":237,"learn_level":0,"name":"觉醒力量","type":5,"class":2,"power":60,"accuracy":100,"pp":15,"gigamax_power":110,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":10,"tm_id":"TM010"},{"move_id":241,"learn_level":0,"name":"大晴天","type":1,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内让日照变得强烈，从而提高火属性的招式威力。水属性的招式威力则降低。","gen7_tm_id":11,"tm_id":"TM011"},{"move_id":63,"learn_level":0,"name":"破坏光线","type":5,"class":2,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"向对手发射强烈的光线进行攻击。下一回合自己将无法动弹。","gen7_tm_id":15,"tm_id":"TM015"},{"move_id":182,"learn_level":0,"name":"守住","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"完全抵挡对手的攻击。连续使出则容易失败。","gen7_tm_id":17,"tm_id":"TM017"},{"move_id":240,"learn_level":0,"name":"求雨","type":2,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内一直降雨，从而提高水属性的招式威力。火属性的招式威力则降低。","gen7_tm_id":18,"tm_id":"TM018"},{"move_id":355,"learn_level":0,"name":"羽栖","type":7,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"降到地面，使身体休息。回复自己最大ＨＰ的一半。","gen7_tm_id":19,"tm_id":"TM019"},{"move_id":219,"learn_level":0,"name":"神秘守护","type":5,"class":0,"power":0,"accuracy":101,"pp":25,"gigamax_power":0,"description":"在５回合内被神奇的力量守护，从而不会陷入异常状态。","gen7_tm_id":20,"tm_id":"TM020"},{"move_id":218,"learn_level":0,"name":"迁怒","type":5,"class":1,"power":1,"accuracy":100,"pp":20,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":21,"tm_id":"TM021"},{"move_id":76,"learn_level":0,"name":"日光束","type":3,"class":2,"power":120,"accuracy":100,"pp":10,"gigamax_power":140,"description":"第１回合收集满满的日光，第２回合发射光束进行攻击。","gen7_tm_id":22,"tm_id":"TM022"},{"move_id":216,"learn_level":0,"name":"报恩","type":5,"class":1,"power":1,"accuracy":100,"pp":20,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":27,"tm_id":"TM027"},{"move_id":104,"learn_level":0,"name":"影子分身","type":5,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"通过快速移动来制造分身，扰乱对手，从而提高闪避率。","gen7_tm_id":32,"tm_id":"TM032"},{"move_id":53,"learn_level":0,"name":"喷射火焰","type":1,"class":2,"power":90,"accuracy":100,"pp":15,"gigamax_power":130,"description":"向对手发射烈焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":35,"tm_id":"TM035"},{"move_id":201,"learn_level":0,"name":"沙暴","type":10,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"在５回合内扬起沙暴，除岩石、地面和钢属性以外的宝可梦，都会受到伤害。岩石属性的特防还会提高。","gen7_tm_id":37,"tm_id":"TM037"},{"move_id":126,"learn_level":0,"name":"大字爆炎","type":1,"class":2,"power":110,"accuracy":85,"pp":5,"gigamax_power":140,"description":"用大字形状的火焰烧尽对手。有时会让对手陷入灼伤状态。","gen7_tm_id":38,"tm_id":"TM038"},{"move_id":332,"learn_level":0,"name":"燕返","type":7,"class":1,"power":60,"accuracy":101,"pp":20,"gigamax_power":110,"description":"以敏捷的动作戏弄对手后进行切斩。攻击必定会命中。","gen7_tm_id":40,"tm_id":"TM040"},{"move_id":263,"learn_level":0,"name":"硬撑","type":5,"class":1,"power":70,"accuracy":100,"pp":20,"gigamax_power":120,"description":"当自己处于中毒、麻痹、灼伤状态时，向对手使出此招式的话，威力会变成２倍。","gen7_tm_id":42,"tm_id":"TM042"},{"move_id":488,"learn_level":0,"name":"蓄能焰袭","type":1,"class":1,"power":50,"accuracy":100,"pp":20,"gigamax_power":100,"description":"让火焰覆盖全身，攻击对手。积蓄力量并提高自己的速度。","gen7_tm_id":43,"tm_id":"TM043"},{"move_id":156,"learn_level":0,"name":"睡觉","type":14,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"连续睡上２回合。回复自己的全部ＨＰ以及治愈所有异常状态。","gen7_tm_id":44,"tm_id":"TM044"},{"move_id":496,"learn_level":0,"name":"轮唱","type":5,"class":2,"power":60,"accuracy":100,"pp":15,"gigamax_power":110,"description":"用歌声攻击对手。同伴还可以接着使出轮唱招式，威力也会提高。","gen7_tm_id":48,"tm_id":"TM048"},{"move_id":315,"learn_level":0,"name":"过热","type":1,"class":2,"power":130,"accuracy":90,"pp":5,"gigamax_power":140,"description":"使出全部力量攻击对手。使用之后会因为反作用力，自己的特攻大幅降低。","gen7_tm_id":50,"tm_id":"TM050"},{"move_id":211,"learn_level":0,"name":"钢翼","type":12,"class":1,"power":70,"accuracy":90,"pp":25,"gigamax_power":120,"description":"用坚硬的翅膀敲打对手进行攻击。有时会提高自己的防御。","gen7_tm_id":51,"tm_id":"TM051"},{"move_id":507,"learn_level":0,"name":"自由落体","type":7,"class":1,"power":60,"accuracy":100,"pp":10,"gigamax_power":110,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":58,"tm_id":"TM058"},{"move_id":261,"learn_level":0,"name":"鬼火","type":1,"class":0,"power":0,"accuracy":85,"pp":15,"gigamax_power":0,"description":"放出怪异的火焰，从而让对手陷入灼伤状态。","gen7_tm_id":61,"tm_id":"TM061"},{"move_id":416,"learn_level":0,"name":"终极冲击","type":5,"class":1,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"使出自己浑身力量突击对手。下一回合自己将无法动弹。","gen7_tm_id":68,"tm_id":"TM068"},{"move_id":19,"learn_level":0,"name":"飞翔","type":7,"class":1,"power":90,"accuracy":95,"pp":15,"gigamax_power":130,"description":"第１回合飞上天空，第２回合攻击对手。","gen7_tm_id":76,"tm_id":"TM076"},{"move_id":207,"learn_level":0,"name":"虚张声势","type":5,"class":0,"power":0,"accuracy":85,"pp":15,"gigamax_power":0,"description":"激怒对手，使其混乱。因为愤怒，对手的攻击会大幅提高。","gen7_tm_id":87,"tm_id":"TM087"},{"move_id":214,"learn_level":0,"name":"梦话","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"从自己已学会的招式中任意使出１个。只能在自己睡觉时使用。","gen7_tm_id":88,"tm_id":"TM088"},{"move_id":369,"learn_level":0,"name":"急速折返","type":8,"class":1,"power":70,"accuracy":100,"pp":20,"gigamax_power":120,"description":"在攻击之后急速返回，和后备宝可梦进行替换。","gen7_tm_id":89,"tm_id":"TM089"},{"move_id":164,"learn_level":0,"name":"替身","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"削减少许自己的ＨＰ，制造分身。分身将成为自己的替身。","gen7_tm_id":90,"tm_id":"TM090"},{"move_id":590,"learn_level":0,"name":"密语","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"和对手进行密语，使其失去集中力，从而降低对手的特攻。","gen7_tm_id":100,"tm_id":"TM100"}]},"7.1":{"1":[{"move_id":52,"learn_level":1,"name":"火花","type":1,"class":2,"power":40,"accuracy":100,"pp":25,"gigamax_power":90,"description":"向对手发射小型火焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":"-1"},{"move_id":17,"learn_level":1,"name":"翅膀攻击","type":7,"class":1,"power":60,"accuracy":100,"pp":35,"gigamax_power":110,"description":"大大地展开美丽的翅膀，将其撞向对手进行攻击。","gen7_tm_id":"-1"},{"move_id":83,"learn_level":8,"name":"火焰旋涡","type":1,"class":2,"power":35,"accuracy":85,"pp":15,"gigamax_power":90,"description":"将对手困在激烈的火焰旋涡中，在４～５回合内进行攻击。","gen7_tm_id":"-1"},{"move_id":97,"learn_level":15,"name":"高速移动","type":14,"class":0,"power":0,"accuracy":101,"pp":30,"gigamax_power":0,"description":"让身体放松变得轻盈，以便高速移动。大幅提高自己的速度。","gen7_tm_id":"-1"},{"move_id":203,"learn_level":22,"name":"挺住","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"即使受到攻击，也至少会留下１ＨＰ。连续使出则容易失败。","gen7_tm_id":"-1"},{"move_id":246,"learn_level":29,"name":"原始之力","type":10,"class":2,"power":60,"accuracy":100,"pp":5,"gigamax_power":110,"description":"用原始之力进行攻击。有时会提高自己所有的能力。","gen7_tm_id":"-1"},{"move_id":53,"learn_level":36,"name":"喷射火焰","type":1,"class":2,"power":90,"accuracy":100,"pp":15,"gigamax_power":130,"description":"向对手发射烈焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":35},{"move_id":219,"learn_level":43,"name":"神秘守护","type":5,"class":0,"power":0,"accuracy":101,"pp":25,"gigamax_power":0,"description":"在５回合内被神奇的力量守护，从而不会陷入异常状态。","gen7_tm_id":20},{"move_id":403,"learn_level":50,"name":"空气斩","type":7,"class":2,"power":75,"accuracy":95,"pp":15,"gigamax_power":130,"description":"用连天空也能劈开的空气之刃进行攻击。有时会使对手畏缩。","gen7_tm_id":"-1"},{"move_id":241,"learn_level":57,"name":"大晴天","type":1,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内让日照变得强烈，从而提高火属性的招式威力。水属性的招式威力则降低。","gen7_tm_id":11},{"move_id":257,"learn_level":64,"name":"热风","type":1,"class":2,"power":95,"accuracy":90,"pp":10,"gigamax_power":130,"description":"将炎热的气息吹向对手进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":"-1"},{"move_id":76,"learn_level":71,"name":"日光束","type":3,"class":2,"power":120,"accuracy":100,"pp":10,"gigamax_power":140,"description":"第１回合收集满满的日光，第２回合发射光束进行攻击。","gen7_tm_id":22},{"move_id":143,"learn_level":78,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1"},{"move_id":355,"learn_level":85,"name":"羽栖","type":7,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"降到地面，使身体休息。回复自己最大ＨＰ的一半。","gen7_tm_id":19},{"move_id":542,"learn_level":92,"name":"暴风","type":7,"class":2,"power":110,"accuracy":70,"pp":10,"gigamax_power":140,"description":"用强烈的风席卷对手进行攻击。有时会使对手混乱。","gen7_tm_id":"-1"},{"move_id":682,"learn_level":99,"name":"燃尽","type":1,"class":2,"power":130,"accuracy":100,"pp":5,"gigamax_power":140,"description":"将自己全身燃烧起火焰来，给予对手大大的伤害。自己的火属性将会消失。","gen7_tm_id":"-1"}],"2":[{"move_id":46,"learn_level":0,"name":"吼叫","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"放走对手，强制拉后备宝可梦上场。如果对手为野生宝可梦，战斗将直接结束。","gen7_tm_id":5,"tm_id":"TM005"},{"move_id":92,"learn_level":0,"name":"剧毒","type":9,"class":0,"power":0,"accuracy":90,"pp":10,"gigamax_power":0,"description":"让对手陷入剧毒状态。随着回合的推进，中毒伤害会增加。","gen7_tm_id":6,"tm_id":"TM006"},{"move_id":237,"learn_level":0,"name":"觉醒力量","type":5,"class":2,"power":60,"accuracy":100,"pp":15,"gigamax_power":110,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":10,"tm_id":"TM010"},{"move_id":241,"learn_level":0,"name":"大晴天","type":1,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内让日照变得强烈，从而提高火属性的招式威力。水属性的招式威力则降低。","gen7_tm_id":11,"tm_id":"TM011"},{"move_id":63,"learn_level":0,"name":"破坏光线","type":5,"class":2,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"向对手发射强烈的光线进行攻击。下一回合自己将无法动弹。","gen7_tm_id":15,"tm_id":"TM015"},{"move_id":182,"learn_level":0,"name":"守住","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"完全抵挡对手的攻击。连续使出则容易失败。","gen7_tm_id":17,"tm_id":"TM017"},{"move_id":240,"learn_level":0,"name":"求雨","type":2,"class":0,"power":0,"accuracy":101,"pp":5,"gigamax_power":0,"description":"在５回合内一直降雨，从而提高水属性的招式威力。火属性的招式威力则降低。","gen7_tm_id":18,"tm_id":"TM018"},{"move_id":355,"learn_level":0,"name":"羽栖","type":7,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"降到地面，使身体休息。回复自己最大ＨＰ的一半。","gen7_tm_id":19,"tm_id":"TM019"},{"move_id":219,"learn_level":0,"name":"神秘守护","type":5,"class":0,"power":0,"accuracy":101,"pp":25,"gigamax_power":0,"description":"在５回合内被神奇的力量守护，从而不会陷入异常状态。","gen7_tm_id":20,"tm_id":"TM020"},{"move_id":218,"learn_level":0,"name":"迁怒","type":5,"class":1,"power":1,"accuracy":100,"pp":20,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":21,"tm_id":"TM021"},{"move_id":76,"learn_level":0,"name":"日光束","type":3,"class":2,"power":120,"accuracy":100,"pp":10,"gigamax_power":140,"description":"第１回合收集满满的日光，第２回合发射光束进行攻击。","gen7_tm_id":22,"tm_id":"TM022"},{"move_id":216,"learn_level":0,"name":"报恩","type":5,"class":1,"power":1,"accuracy":100,"pp":20,"gigamax_power":130,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":27,"tm_id":"TM027"},{"move_id":104,"learn_level":0,"name":"影子分身","type":5,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"通过快速移动来制造分身，扰乱对手，从而提高闪避率。","gen7_tm_id":32,"tm_id":"TM032"},{"move_id":53,"learn_level":0,"name":"喷射火焰","type":1,"class":2,"power":90,"accuracy":100,"pp":15,"gigamax_power":130,"description":"向对手发射烈焰进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":35,"tm_id":"TM035"},{"move_id":201,"learn_level":0,"name":"沙暴","type":10,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"在５回合内扬起沙暴，除岩石、地面和钢属性以外的宝可梦，都会受到伤害。岩石属性的特防还会提高。","gen7_tm_id":37,"tm_id":"TM037"},{"move_id":126,"learn_level":0,"name":"大字爆炎","type":1,"class":2,"power":110,"accuracy":85,"pp":5,"gigamax_power":140,"description":"用大字形状的火焰烧尽对手。有时会让对手陷入灼伤状态。","gen7_tm_id":38,"tm_id":"TM038"},{"move_id":332,"learn_level":0,"name":"燕返","type":7,"class":1,"power":60,"accuracy":101,"pp":20,"gigamax_power":110,"description":"以敏捷的动作戏弄对手后进行切斩。攻击必定会命中。","gen7_tm_id":40,"tm_id":"TM040"},{"move_id":263,"learn_level":0,"name":"硬撑","type":5,"class":1,"power":70,"accuracy":100,"pp":20,"gigamax_power":120,"description":"当自己处于中毒、麻痹、灼伤状态时，向对手使出此招式的话，威力会变成２倍。","gen7_tm_id":42,"tm_id":"TM042"},{"move_id":488,"learn_level":0,"name":"蓄能焰袭","type":1,"class":1,"power":50,"accuracy":100,"pp":20,"gigamax_power":100,"description":"让火焰覆盖全身，攻击对手。积蓄力量并提高自己的速度。","gen7_tm_id":43,"tm_id":"TM043"},{"move_id":156,"learn_level":0,"name":"睡觉","type":14,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"连续睡上２回合。回复自己的全部ＨＰ以及治愈所有异常状态。","gen7_tm_id":44,"tm_id":"TM044"},{"move_id":496,"learn_level":0,"name":"轮唱","type":5,"class":2,"power":60,"accuracy":100,"pp":15,"gigamax_power":110,"description":"用歌声攻击对手。同伴还可以接着使出轮唱招式，威力也会提高。","gen7_tm_id":48,"tm_id":"TM048"},{"move_id":315,"learn_level":0,"name":"过热","type":1,"class":2,"power":130,"accuracy":90,"pp":5,"gigamax_power":140,"description":"使出全部力量攻击对手。使用之后会因为反作用力，自己的特攻大幅降低。","gen7_tm_id":50,"tm_id":"TM050"},{"move_id":211,"learn_level":0,"name":"钢翼","type":12,"class":1,"power":70,"accuracy":90,"pp":25,"gigamax_power":120,"description":"用坚硬的翅膀敲打对手进行攻击。有时会提高自己的防御。","gen7_tm_id":51,"tm_id":"TM051"},{"move_id":507,"learn_level":0,"name":"自由落体","type":7,"class":1,"power":60,"accuracy":100,"pp":10,"gigamax_power":110,"description":"无法使用这个招式。虽然忘记之后就再也想不起来了，但还是建议忘记这个招式。","gen7_tm_id":58,"tm_id":"TM058"},{"move_id":261,"learn_level":0,"name":"鬼火","type":1,"class":0,"power":0,"accuracy":85,"pp":15,"gigamax_power":0,"description":"放出怪异的火焰，从而让对手陷入灼伤状态。","gen7_tm_id":61,"tm_id":"TM061"},{"move_id":416,"learn_level":0,"name":"终极冲击","type":5,"class":1,"power":150,"accuracy":90,"pp":5,"gigamax_power":150,"description":"使出自己浑身力量突击对手。下一回合自己将无法动弹。","gen7_tm_id":68,"tm_id":"TM068"},{"move_id":19,"learn_level":0,"name":"飞翔","type":7,"class":1,"power":90,"accuracy":95,"pp":15,"gigamax_power":130,"description":"第１回合飞上天空，第２回合攻击对手。","gen7_tm_id":76,"tm_id":"TM076"},{"move_id":207,"learn_level":0,"name":"虚张声势","type":5,"class":0,"power":0,"accuracy":85,"pp":15,"gigamax_power":0,"description":"激怒对手，使其混乱。因为愤怒，对手的攻击会大幅提高。","gen7_tm_id":87,"tm_id":"TM087"},{"move_id":214,"learn_level":0,"name":"梦话","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"从自己已学会的招式中任意使出１个。只能在自己睡觉时使用。","gen7_tm_id":88,"tm_id":"TM088"},{"move_id":369,"learn_level":0,"name":"急速折返","type":8,"class":1,"power":70,"accuracy":100,"pp":20,"gigamax_power":120,"description":"在攻击之后急速返回，和后备宝可梦进行替换。","gen7_tm_id":89,"tm_id":"TM089"},{"move_id":164,"learn_level":0,"name":"替身","type":5,"class":0,"power":0,"accuracy":101,"pp":10,"gigamax_power":0,"description":"削减少许自己的ＨＰ，制造分身。分身将成为自己的替身。","gen7_tm_id":90,"tm_id":"TM090"},{"move_id":590,"learn_level":0,"name":"密语","type":5,"class":0,"power":0,"accuracy":101,"pp":20,"gigamax_power":0,"description":"和对手进行密语，使其失去集中力，从而降低对手的特攻。","gen7_tm_id":100,"tm_id":"TM100"}],"3":[{"move_id":432,"learn_level":0,"name":"清除浓雾","type":7,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"用强风吹开对手的反射壁或光墙等。也会降低对手的闪避率。","gen7_tm_id":"-1"},{"move_id":366,"learn_level":0,"name":"顺风","type":7,"class":0,"power":0,"accuracy":101,"pp":15,"gigamax_power":0,"description":"刮起猛烈的旋风，在４回合内提高我方全员的速度。","gen7_tm_id":"-1"},{"move_id":257,"learn_level":0,"name":"热风","type":1,"class":2,"power":95,"accuracy":90,"pp":10,"gigamax_power":130,"description":"将炎热的气息吹向对手进行攻击。有时会让对手陷入灼伤状态。","gen7_tm_id":"-1"},{"move_id":173,"learn_level":0,"name":"打鼾","type":5,"class":2,"power":50,"accuracy":100,"pp":15,"gigamax_power":100,"description":"在自己睡觉时，发出噪音进行攻击。有时会使对手畏缩。","gen7_tm_id":"-1"},{"move_id":673,"learn_level":0,"name":"磨砺","type":5,"class":0,"power":0,"accuracy":101,"pp":30,"gigamax_power":0,"description":"集中精神，下次攻击必定会击中要害。","gen7_tm_id":"-1"},{"move_id":143,"learn_level":0,"name":"神鸟猛击","type":7,"class":1,"power":140,"accuracy":90,"pp":5,"gigamax_power":140,"description":"第２回合攻击对手。偶尔使对手畏缩。也容易击中要害。","gen7_tm_id":"-1"}]}},"encounter_table":[],"encounter_table_sw":[]}; });
+        app.factory('title', function() { return 'No.146 火焰鸟 - 宝可梦'; });
+    </script>    </main>
+    <div id="tooltip-box" class="hidden"></div>
+    <br clear="both">
+    <footer>
+        <script>
+            var VERSION = '3.5';
+            var DCVERSION = '1.2';
+
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//s.pokeuniv.com/analytics.js','ga');
+
+            ga('create', 'UA-88740254-2', 'auto');
+            ga('send', 'pageview');
+        </script>
+        <br>
+        请使用支持HTML5的浏览器（例如谷歌浏览器）进行浏览<br>
+        2010-2019 PokeUniv Dex V3.5. <br>
+        All rights reserved by Game Freak, Nintendo and Pokemon Company.
+    </footer>
+</body>

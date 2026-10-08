@@ -65,7 +65,7 @@ canvas {
   display: block;
   width: 100%;
   height: auto;
-  background: linear-gradient(180deg, #edf5fb 0%, #eaf3f9 45%, #e3e9ee 100%);
+  background: linear-gradient(180deg, #080b18 0%, #10152b 58%, #1b2440 100%);
   border-bottom: 1px solid var(--line);
   user-select: none;
   touch-action: manipulation;

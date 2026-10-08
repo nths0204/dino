@@ -19,5 +19,5 @@ python -m http.server 8000
 然後在瀏覽器打開：
 
 ```text
-http://localhost:8000
+ttp://localhost:8000h
 ```
